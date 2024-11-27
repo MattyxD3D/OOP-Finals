@@ -133,19 +133,26 @@
     <div id="payment-modal" class="payment-modal">
         <div class="payment-content">
             <h2>Payment Details</h2>
+            <div>Select Payment Method</div>
             <select id="payment-method" onchange="togglePaymentFields()">
                 <option value="">Select Payment Method</option>
                 <option value="cash">Cash</option>
                 <option value="card">Credit Card</option>
             </select>
             <div id="common-fields" style="display:none;">
+                <div>Enter Full Name:</div>
                 <input type="text" id="customer-name" placeholder="Full Name" required>
+                <div>Enter phone number</div>
                 <input type="tel" id="customer-phone" placeholder="Phone Number" required>
+                <div>Enter Address</div>
                 <input type="text" id="customer-address" placeholder="Delivery Address" required>
             </div>
             <div id="card-fields" style="display:none;">
+                <div>Enter Card Number</div>
                 <input type="text" id="card-number" placeholder="Card Number" required>
+                <div>Enter card expiry date</div>
                 <input type="text" id="card-expiry" placeholder="Expiry Date (MM/YY)" required>
+                <div>Enter CCV</div>
                 <input type="text" id="card-cvv" placeholder="CVV" required>
             </div>
             <button onclick="processPayment()">Complete Payment</button>
@@ -154,7 +161,7 @@
     </div>
 
     <script>
-        // Product Class Hierarchy (same as before)
+        // MAIN CLASS
         class Product {
             constructor(id, name, price, category, imageUrl) {
                 this.id = id;
@@ -187,7 +194,7 @@
             }
         }
 
-        // Cart Class (same as before)
+        // Cart Class 
         class Cart {
             constructor() {
                 this.items = [];
@@ -247,7 +254,7 @@
             }
         }
 
-        // Product Catalog with Image URLs
+        // Product Catalog items
         const products = [
             new Electronics(1, 'Smartphone', 599.99, 'Electronics', './Smart Phone.png'),
             new Electronics(2, 'Laptop', 1299.99, 'Electronics', 'Laptop.png'),
