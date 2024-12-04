@@ -167,6 +167,10 @@
             if (userManager.authenticateUser(username, password)) {
                 document.getElementById('login-section').classList.add('hidden');
                 document.getElementById('shopping-section').classList.remove('hidden');
+
+
+                //Redirect back to main htmle
+                window.location.href = 'index.html?checkout=true';
             } else {
                 alert('Invalid username or password');
             }
