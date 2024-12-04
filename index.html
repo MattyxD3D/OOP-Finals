@@ -136,9 +136,6 @@
 
         }
 
-
-
-        /* Add these styles */
 .cart-summary {
     display: none; /* Hidden by default */
     position: fixed;
@@ -197,18 +194,14 @@
 }
 
 #login-modal .payment-content {
+
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     width: 80%;
-    max-width: 400px;
+    max-width: 500px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
-
-
-
-
 
 
 
@@ -243,7 +236,7 @@
         <p>Total Discount: $<span id="cart-discount-main">0.00</span></p>
         <p>Total: $<span id="cart-total-main">0.00</span></p>
         <!-- <button onclick="PaymentMethod()">Checkout</button> -->
-        <button onclick="checkout()">Checkout Tunay na button</button>
+        <button onclick="checkout()">Checkout</button>
     </div>
     
     <div id="cart-summary-modal">
@@ -329,143 +322,12 @@
             }
         }
 
-        // Cart Class 
-//         class Cart {
-//             constructor() {
-//                 this.items = [];
-//             }
-
-//             addItem(product) {
-//                 const existingItem = this.items.find(item => item.id === product.id);
-                
-//                 if (existingItem) {
-//                     existingItem.quantity++;
-//                 } else {
-//                     const cartItem = Object.create(Object.getPrototypeOf(product));
-//                     Object.assign(cartItem, product);
-//                     cartItem.quantity = 1;
-//                     cartItem.uniqueId = Date.now();
-//                     this.items.push(cartItem);
-//                 }
-                
-//                 this.updateCart();
-//             }
-
-//             removeItem(uniqueId) {
-//                 const index = this.items.findIndex(item => item.uniqueId === uniqueId);
-                
-//                 if (index !== -1) {
-//                     if (this.items[index].quantity > 1) {
-//                         this.items[index].quantity--;
-//                     } else {
-//                         this.items.splice(index, 1);
-//                     }
-                    
-//                     this.updateCart();
-//                 }
-//             }
-
-//             calculateTotal() {
-//                 return this.items.reduce((total, item) => 
-//                     total + (item.applyDiscount() * item.quantity), 0
-//                 ).toFixed(2);
-//             }
-
-//             calculateDisount(){
-
-//                 return this.items.reduce((total, item) => 
-//                 total + ((item.price - item.applyDiscount()) * item.quantity), 0
-//                 ).toFixed(2);
+        
 
 
-//             }
-
-//             // updateCart() {
-//             //     const cartItems = document.getElementById('cart-items');
-//             //     const cartTotal = document.getElementById('cart-total');
-//             //     const cartDisount = document.getElementById('cart-discount')
-                
-//             //     cartItems.innerHTML = '';
-//             //     this.items.forEach(item => {
-//             //         const li = document.createElement('li');
-//             //         li.innerHTML = `
-//             //             <span>${item.name} x${item.quantity} - $${(item.applyDiscount() * item.quantity).toFixed(2)}</span>
-//             //             <button onclick="cart.removeItem(${item.uniqueId})">Remove</button>
-//             //         `;
-//             //         cartItems.appendChild(li);
-//             //     });
-
-//             //     cartTotal.textContent = this.calculateTotal();
-//             //     cartDisount.textContent = this.calculateDisount();
-                
-//             // }
-
-// updateCart() {
-//     const cartItemsMain = document.getElementById('cart-items-main');
-//     const cartItemsSummary = document.getElementById('cart-items-summary');
-//     const cartTotalMain = document.getElementById('cart-total-main');
-//     const cartTotalSummary = document.getElementById('cart-total-summary');
-//     const cartDiscountMain = document.getElementById('cart-discount-main');
-//     const cartDiscountSummary = document.getElementById('cart-discount-summary');
-
-//     // Clear both lists
-//     cartItemsMain.innerHTML = '';
-//     cartItemsSummary.innerHTML = '';
-
-//     // Populate items for both displays
-//     this.items.forEach(item => {
-//         const li = document.createElement('li');
-//         li.innerHTML = `
-//             <span>${item.name} x${item.quantity} - $${(item.applyDiscount() * item.quantity).toFixed(2)}</span>
-//             <button onclick="cart.removeItem(${item.uniqueId})">Remove</button>
-//         `;
-//         cartItemsMain.appendChild(li);
-//         cartItemsSummary.appendChild(li.cloneNode(true));
-//     });
-
-//     // Update totals and discounts for both
-//     const total = this.calculateTotal();
-//     const discount = this.calculateDisount();
-
-//     cartTotalMain.textContent = total;
-//     cartTotalSummary.textContent = total;
-//     cartDiscountMain.textContent = discount;
-//     cartDiscountSummary.textContent = discount;
-// }
-
-
-class Cart {
+        class Cart {
     constructor() {
-        this.items = this.loadCart();
-    }
-
-    loadCart() {
-        const savedCart = localStorage.getItem('cartItems');
-        if (savedCart) {
-            const parsedCart = JSON.parse(savedCart);
-            return parsedCart.map(item => {
-                let product;
-                switch(item.category) {
-                    case 'Electronics':
-                        product = new Electronics(item.id, item.name, item.price, item.category, item.imageUrl);
-                        break;
-                    case 'Clothing':
-                        product = new Clothing(item.id, item.name, item.price, item.category, item.imageUrl);
-                        break;
-                    case 'Books':
-                        product = new Books(item.id, item.name, item.price, item.category, item.imageUrl);
-                        break;
-                }
-                product.quantity = item.quantity;
-                product.uniqueId = item.uniqueId;
-                return product;
-            });
-        }
-        return [];
-    }
-
-    saveCart() {
-        localStorage.setItem('cartItems', JSON.stringify(this.items));
+        this.items = [];
     }
 
     addItem(product) {
@@ -481,7 +343,6 @@ class Cart {
             this.items.push(cartItem);
         }
         
-        this.saveCart();
         this.updateCart();
     }
 
@@ -495,7 +356,6 @@ class Cart {
                 this.items.splice(index, 1);
             }
             
-            this.saveCart();
             this.updateCart();
         }
     }
@@ -712,9 +572,6 @@ function redirectToSignIn() {
 }
 
 
-
-
-
 // On load show the payment method
 
 function openCheckoutModal() {
@@ -733,13 +590,10 @@ function openCheckoutModal() {
     window.onload = checkForCheckoutParameter;
 
 
-
     function ClosePaymentModalFromLogin() {
         const modal = document.getElementById('payment-modal');
         modal.style.display = 'none'; // Ensure your modal uses display to show/hide
     }
-
-
 
 
     function redirectToSignIn() {
