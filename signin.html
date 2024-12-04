@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Secure Shopping Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .login-container, .signup-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top: 50px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="login-section" class="login-container">
+        <h2>Login</h2>
+        <input type="text" id="login-username" placeholder="Username">
+        <input type="password" id="login-password" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <p>Don't have an account? <a href="#" onclick="showSignup()">Sign Up</a></p>
+    </div>
+
+    <div id="signup-section" class="signup-container hidden">
+        <h2>Sign Up</h2>
+        <input type="text" id="signup-username" placeholder="Choose Username">
+        <input type="email" id="signup-email" placeholder="Email Address">
+        <input type="password" id="signup-password" placeholder="Create Password">
+        <input type="password" id="confirm-password" placeholder="Confirm Password">
+        <button onclick="signup()">Create Account</button>
+        <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+    </div>
+
+    <div id="shopping-section" class="hidden">
+        <h1>Welcome to Our Shopping Platform</h1>
+        <button onclick="logout()">Logout</button>
+        <!-- Add your shopping content here -->
+    </div>
+
+    <script>
+        // Simple user management system
+        class UserManager {
+            constructor() {
+                // Use localStorage to simulate a basic user database
+                this.users = JSON.parse(localStorage.getItem('users')) || [];
+            }
+
+            // Save users to local storage
+            saveUsers() {
+                localStorage.setItem('users', JSON.stringify(this.users));
+            }
+
+            // Validate email format
+            validateEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+
+            // Check if username exists
+            userExists(username) {
+                return this.users.some(user => user.username === username);
+            }
+
+            // Register new user
+            registerUser(username, email, password) {
+                // Basic validation
+                if (!username || !email || !password) {
+                    alert('Please fill in all fields');
+                    return false;
+                }
+
+                if (this.userExists(username)) {
+                    alert('Username already exists');
+                    return false;
+                }
+
+                if (!this.validateEmail(email)) {
+                    alert('Invalid email format');
+                    return false;
+                }
+
+                if (password.length < 6) {
+                    alert('Password must be at least 6 characters long');
+                    return false;
+                }
+
+                // Hash password (basic simulation)
+                const hashedPassword = this.hashPassword(password);
+
+                // Store user
+                this.users.push({
+                    username,
+                    email,
+                    password: hashedPassword
+                });
+
+                this.saveUsers();
+                return true;
+            }
+
+            // Simple password hashing (not cryptographically secure)
+            hashPassword(password) {
+                let hash = 0;
+                for (let i = 0; i < password.length; i++) {
+                    const char = password.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash; // Convert to 32-bit integer
+                }
+                return hash.toString();
+            }
+
+            // Authenticate user
+            authenticateUser(username, password) {
+                const hashedPassword = this.hashPassword(password);
+                return this.users.some(
+                    user => user.username === username && user.password === hashedPassword
+                );
+            }
+        }
+
+        // Initialize user manager
+        const userManager = new UserManager();
+
+        // DOM manipulation functions
+        function showLogin() {
+            document.getElementById('login-section').classList.remove('hidden');
+            document.getElementById('signup-section').classList.add('hidden');
+        }
+
+        function showSignup() {
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('signup-section').classList.remove('hidden');
+        }
+
+        // Login function
+        function login() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            if (userManager.authenticateUser(username, password)) {
+                document.getElementById('login-section').classList.add('hidden');
+                document.getElementById('shopping-section').classList.remove('hidden');
+            } else {
+                alert('Invalid username or password');
+            }
+        }
+
+        // Signup function
+        function signup() {
+            const username = document.getElementById('signup-username').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            // Check password match
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+
+            // Attempt to register user
+            if (userManager.registerUser(username, email, password)) {
+                alert('Account created successfully!');
+                showLogin();
+            }
+        }
+
+        // Logout function
+        function logout() {
+            document.getElementById('shopping-section').classList.add('hidden');
+            document.getElementById('login-section').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
