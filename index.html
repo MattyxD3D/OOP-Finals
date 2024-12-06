@@ -56,6 +56,12 @@
             padding: 15px;
             min-width: 250px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+
+        .cart:hover {
+            transform: scale(1.05);
         }
         .cart button {
             width: 100%;
@@ -154,6 +160,7 @@
 
 .cart-summary h2 {
     margin-top: 0;
+    font-size: 30px;
 }
 
 .cart-summary ul {
@@ -204,12 +211,50 @@
 }
 
 
+.title{
+    display: flex;
+padding: 10px 14px;
+justify-content: center;
+align-items: center;
+gap: 32px;
+font-size:50px;
+color: white;
+background-color: #f44336;
+border-radius: 10px;
+}
+
+body {
+background-color: rgb(255, 166, 0);
+}
 
 
+.cart_title{
+font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+
+
+#cart-items-main{
+
+    padding: 10px;
+    font-size: large;
+}
+
+
+.cart_total {
+
+font-size: large;
+
+}
+
+.chckoutbuttons {
+  
+    font-size: larger;
+}
     </style>
 </head>
 <body>
-    <h1>Online Shopping Platform</h1>
+    <h1 class="title">Online Shopping Platform</h1>
     
     
 
@@ -231,12 +276,13 @@
 
     <!-- Shopping Cart item -->
     <div id="cart" class="cart">
-        <h2>Shopping Cart</h2>
+        <h2 class="cart_title">Shopping Cart</h2>
         <ul id="cart-items-main"></ul>
-        <p>Total Discount: $<span id="cart-discount-main">0.00</span></p>
-        <p>Total: $<span id="cart-total-main">0.00</span></p>
+        <p class="cart_total">Total Discount: $<span id="cart-discount-main">0.00</span></p>
+        <p class="cart_total">Total: $<span id="cart-total-main">0.00</span></p>
         <!-- <button onclick="PaymentMethod()">Checkout</button> -->
-        <button onclick="checkout()">Checkout</button>
+
+        <button class="chckoutbuttons" onclick="checkout()">Checkout</button>
     </div>
     
     <div id="cart-summary-modal">
@@ -623,6 +669,9 @@ function handleLogin() {
         alert('Invalid credentials');
     }
 }
+
+
+
     </script>
 </body>
 
@@ -634,6 +683,7 @@ function handleLogin() {
             <input type="password" id="password" placeholder="Password" required>
             <button onclick="handleLogin()">Login</button>
             <button onclick="closeLoginModal()">Cancel</button>
+        
         </div>
     </div>
 </div>
