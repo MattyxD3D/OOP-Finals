@@ -528,7 +528,8 @@ font-size: large;
 #login-fields, #signup-fields {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 20px;
+  
 }
 
 .payment-content input {
@@ -1144,7 +1145,9 @@ function handleSignup() {
     <div class="payment-content">
         <h2>Login</h2>
         <div id="login-fields">
+            <h3>Username</h3>
             <input type="text" id="username" placeholder="Username" required>
+            <h3>Password</h3>
             <input type="password" id="password" placeholder="Password" required>
             <button onclick="handleLogin()">Login</button>
             <button onclick="closeLoginModal()">Cancel</button>
