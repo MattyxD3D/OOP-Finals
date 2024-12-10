@@ -270,6 +270,44 @@ font-size: large;
   
     font-size: larger;
 }
+
+
+
+
+/* Sign up modal  */
+#signup-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    #signup-modal .payment-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        width: 80%;
+        max-width: 500px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-links {
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    .modal-links a {
+        color: #f44336;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
     </style>
 </head>
 <body>
@@ -679,9 +717,9 @@ function handleLogin() {
         return;
     }
     
-    // Add your login validation logic here
-    // For demo, using simple check
-    if (username === 'demo' && password === 'password') {
+    const user = users.find(u => u.username === username && u.password === password);
+    
+    if (user || (username === 'demo' && password === 'password')) {
         closeLoginModal();
         PaymentMethod();
     } else {
@@ -691,10 +729,54 @@ function handleLogin() {
 
 
 
+
+// Add to existing java script: 
+
+let users = [];
+
+function showSignupModal() {
+    document.getElementById('login-modal').style.display = 'none';
+    document.getElementById('signup-modal').style.display = 'block';
+}
+
+function showLoginModal() {
+    document.getElementById('signup-modal').style.display = 'none';
+    document.getElementById('login-modal').style.display = 'block';
+}
+
+function closeSignupModal() {
+    document.getElementById('signup-modal').style.display = 'none';
+}
+
+function handleSignup() {
+    const username = document.getElementById('new-username').value;
+    const password = document.getElementById('new-password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+
+    if (!username || !password || !confirmPassword) {
+        alert('Please fill in all fields');
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        alert('Passwords do not match');
+        return;
+    }
+
+    if (users.some(user => user.username === username)) {
+        alert('Username already exists');
+        return;
+    }
+
+    users.push({ username, password });
+    alert('Account created successfully!');
+    closeSignupModal();
+    showLoginModal();
+}
     </script>
 </body>
 
-<div id="login-modal" class="payment-modal">
+<!-- <div id="login-modal" class="payment-modal">
     <div class="payment-content">
         <h2>Login</h2>
         <h3>un: demo pw: password</h3>
@@ -704,6 +786,39 @@ function handleLogin() {
             <button onclick="handleLogin()">Login</button>
             <button onclick="closeLoginModal()">Cancel</button>
         
+        </div>
+    </div>
+</div> -->
+
+
+<div id="login-modal" class="payment-modal">
+    <div class="payment-content">
+        <h2>Login</h2>
+        <div id="login-fields">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button onclick="handleLogin()">Login</button>
+            <button onclick="closeLoginModal()">Cancel</button>
+            <div class="modal-links">
+                <a onclick="showSignupModal()">Don't have an account? Sign up</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="signup-modal" class="payment-modal">
+    <div class="payment-content">
+        <h2>Sign Up</h2>
+        <div id="signup-fields">
+            <input type="text" id="new-username" placeholder="Username" required>
+            <input type="password" id="new-password" placeholder="Password" required>
+            <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+            <button onclick="handleSignup()">Sign Up</button>
+            <button onclick="closeSignupModal()">Cancel</button>
+            <div class="modal-links">
+                <a onclick="showLoginModal()">Already have an account? Login</a>
+            </div>
         </div>
     </div>
 </div>
