@@ -1,284 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Online Shopping Platform</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
-        .search-filter {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            gap: 10px;
-        }
-        #search-bar, #category-filter {
-            padding: 10px;
-            width: 100%;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        .product-card {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-        .product-card img {
-            max-width: 200px;
-            max-height: 200px;
-            object-fit: contain;
-            margin-bottom: 10px;
-        }
-        .product-card:hover {
-            transform: scale(1.05);
-        }
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f4f4f4;
+      }
+      .search-filter {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        gap: 10px;
+      }
+      #search-bar,
+      #category-filter {
+        padding: 10px;
+        width: 100%;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+      }
+      .product-card {
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+      .product-card img {
+        max-width: 200px;
+        max-height: 200px;
+        object-fit: contain;
+        margin-bottom: 10px;
+      }
+      .product-card:hover {
+        transform: scale(1.05);
+      }
 
-        .product-card button {
-            font-size: 20px;
-            background-color: #f44336;
-          color: white;
-          border-radius: 10px;
-          padding: 1.4cap;
-          transition: transform 0.3s ease;
-        }
-        .product-card button:hover {
-            transform: scale(1.05);
-            background-color: green;
-            cursor: pointer;
-        }
-        .cart {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            min-width: 250px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
+      .product-card button {
+        font-size: 20px;
+        background-color: #f44336;
+        color: white;
+        border-radius: 10px;
+        padding: 1.4cap;
+        transition: transform 0.3s ease;
+      }
+      .product-card button:hover {
+        transform: scale(1.05);
+        background-color: green;
+        cursor: pointer;
+      }
+      .cart {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        min-width: 250px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
 
+      .cart:hover {
+        transform: scale(1.05);
+      }
+      .cart button {
+        width: 100%;
+        padding: 10px;
+        background-color: #f44336;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+      .cart button :hover {
+        background-color: green;
+      }
+      #cart-items li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      #cart-items li button {
+        background-color: #f44336;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 5px 10px;
+      }
+      #payment-modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
 
-        .cart:hover {
-            transform: scale(1.05);
-        }
-        .cart button {
-            width: 100%;
-            padding: 10px;
-            background-color: #f44336;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        .cart button :hover{
+      #order-summary {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
 
-            background-color: green;
-        }
-        #cart-items li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        #cart-items li button {
-            background-color: #f44336;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 5px 10px;
-        }
-        #payment-modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-        }
+      .payment-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 100%;
+        max-width: 600px;
+        border-radius: 8px;
+      }
+      .payment-content input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ff0000;
+        border-radius: 4px;
+      }
 
-        #order-summary {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-        }
+      #ordersummary {
+        display: flex;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
 
+      .cart-summary {
+        display: none; /* Hidden by default */
+        align-items: center;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* Center it */
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        min-width: 300px;
+        max-width: 90%;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+      }
 
-        .payment-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 100%;
-            max-width: 600px;
-            border-radius: 8px;
-        }
-        .payment-content input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ff0000;
-            border-radius: 4px;
-        }
+      .cart-summary h2 {
+        margin-top: 0;
+        font-size: 30px;
+      }
 
+      .cart-summary ul {
+        max-height: 200px;
+        overflow-y: auto;
+        list-style: none;
+        padding: 0;
+        margin: 10px 0;
+      }
 
-        #ordersummary{
+      /* Backdrop for the modal */
+      .modal-backdrop {
+        display: none; /* Hidden by default */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        z-index: 999;
+      }
 
-            display: flex;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
+      /* Login */
 
-        }
+      #login-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none; /* Change to 'flex' to enable flexbox centering */
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
 
-.cart-summary {
-    display: none; /* Hidden by default */
-    align-items: center;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Center it */
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px;
-    min-width: 300px;
-    max-width: 90%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-}
+      #login-modal .payment-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        width: 100%;
+        max-width: 500px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
 
-.cart-summary h2 {
-    margin-top: 0;
-    font-size: 30px;
-}
+      .title {
+        display: flex;
+        padding: 10px 14px;
+        justify-content: center;
+        align-items: center;
+        gap: 32px;
+        font-size: 50px;
+        color: white;
+        background-color: #f44336;
+        border-radius: 10px;
+      }
 
-.cart-summary ul {
-    max-height: 200px;
-    overflow-y: auto;
-    list-style: none;
-    padding: 0;
-    margin: 10px 0;
-}
+      body {
+        background-color: rgb(255, 166, 0);
+      }
 
-/* Backdrop for the modal */
-.modal-backdrop {
-    display: none; /* Hidden by default */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    z-index: 999;
-}
+      .cart_title {
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
+      }
 
-        
+      #cart-items-main {
+        padding: 10px;
+        font-size: large;
+      }
 
-/* Login */
+      .cart_total {
+        font-size: large;
+      }
 
-#login-modal {
-    
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: none; /* Change to 'flex' to enable flexbox centering */
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+      .chckoutbuttons {
+        font-size: larger;
+      }
 
-}
-
-#login-modal .payment-content {
-
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 100%;
-    max-width: 500px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-
-.title{
-    display: flex;
-padding: 10px 14px;
-justify-content: center;
-align-items: center;
-gap: 32px;
-font-size:50px;
-color: white;
-background-color: #f44336;
-border-radius: 10px;
-}
-
-body {
-background-color: rgb(255, 166, 0);
-}
-
-
-.cart_title{
-font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-
-}
-
-
-#cart-items-main{
-
-    padding: 10px;
-    font-size: large;
-}
-
-
-.cart_total {
-
-font-size: large;
-
-}
-
-.chckoutbuttons {
-  
-    font-size: larger;
-}
-
-
-
-
-/* Sign up modal  */
-#signup-modal {
+      /* Sign up modal  */
+      #signup-modal {
         position: fixed;
         top: 0;
         left: 0;
@@ -289,893 +268,921 @@ font-size: large;
         justify-content: center;
         align-items: center;
         z-index: 1000;
-    }
+      }
 
-    #signup-modal .payment-content {
+      #signup-modal .payment-content {
         background-color: white;
         padding: 20px;
         border-radius: 8px;
         width: 80%;
         max-width: 500px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+      }
 
-    .modal-links {
+      .modal-links {
         margin-top: 15px;
         text-align: center;
-    }
+      }
 
-    .modal-links a {
+      .modal-links a {
         color: #f44336;
         text-decoration: underline;
         cursor: pointer;
-    }
+      }
 
+      /* order summary */
 
-    /* order summary */
+      .modal-backdrop {
+        background-color: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(3px);
+        transition: all 0.3s ease;
+      }
 
-
-    .modal-backdrop {
-    background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(3px);
-    transition: all 0.3s ease;
-}
-
-.cart-summary {
-    background-color: #ffffff;
-    border-radius: 16px;
-    padding: 2rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-    animation: slideIn 0.3s ease;
-    max-width: 500px;
-    width: 90%;
-}
-
-@keyframes slideIn {
-    from {
-        transform: translate(-50%, -60%);
-        opacity: 0;
-    }
-    to {
-        transform: translate(-50%, -50%);
-        opacity: 1;
-    }
-}
-
-.cart-summary h2 {
-    color: #2c3e50;
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.8rem;
-    border-bottom: 2px solid #ecf0f1;
-    text-align: center;
-}
-
-.cart-summary ul {
-    max-height: 300px;
-    overflow-y: auto;
-    padding: 0.5rem;
-    margin: 1rem 0;
-    border-radius: 8px;
-    background-color: #f8f9fa;
-}
-
-.cart-summary ul li {
-    padding: 0.8rem;
-    margin-bottom: 0.5rem;
-    background-color: white;
-    border-radius: 6px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: transform 0.2s ease;
-}
-
-.cart-summary ul li:hover {
-    transform: translateX(5px);
-}
-
-.cart-summary ul li button {
-    background-color: #ff4757;
-    color: white;
-    border: none;
-    padding: 0.4rem 0.8rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.cart-summary ul li button:hover {
-    background-color: #ff6b81;
-}
-
-.cart-summary p {
-    font-size: 1.1rem;
-    color: #2d3436;
-    margin: 0.8rem 0;
-    padding: 0.5rem 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.cart-summary p span {
-    font-weight: bold;
-    color: #2ecc71;
-}
-
-.cart-summary button {
-    width: 100%;
-    padding: 1rem;
-    margin-top: 1rem;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.cart-summary button[onclick="redirectToSignIn()"] {
-    background-color: #2ecc71;
-    color: white;
-}
-
-.cart-summary button[onclick="redirectToSignIn()"]:hover {
-    background-color: #27ae60;
-    transform: translateY(-2px);
-}
-
-.cart-summary button[onclick="closeCartSummary()"] {
-    background-color: #e74c3c;
-    color: white;
-}
-
-.cart-summary button[onclick="closeCartSummary()"]:hover {
-    background-color: #c0392b;
-    transform: translateY(-2px);
-}
-
-/* Custom scrollbar for the items list */
-.cart-summary ul::-webkit-scrollbar {
-    width: 6px;
-}
-
-.cart-summary ul::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-}
-
-.cart-summary ul::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 10px;
-}
-
-.cart-summary ul::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .cart-summary {
-        width: 95%;
-        padding: 1.5rem;
-    }
-
-    .cart-summary h2 {
-        font-size: 1.5rem;
-    }
-
-    .cart-summary ul {
-        max-height: 250px;
-    }
-
-    .cart-summary button {
-        padding: 0.8rem;
-    }
-}
-
-
-/* login and sign up */
-    
-.payment-modal {
-    background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(3px);
-    transition: all 0.3s ease;
-}
-
-.payment-content {
-    background: white;
-    border-radius: 16px;
-    padding: 2.5rem;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    animation: modalSlideIn 0.3s ease;
-    max-width: 400px;
-    width: 90%;
-}
-
-@keyframes modalSlideIn {
-    from {
-        transform: translateY(-20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-.payment-content h2 {
-    color: #2c3e50;
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
-    font-weight: 600;
-    position: relative;
-}
-
-.payment-content h2::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50px;
-    height: 3px;
-    background-color: #f44336;
-    border-radius: 2px;
-}
-
-#login-fields, #signup-fields {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  
-}
-
-.payment-content input {
-    padding: 1rem;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: all 0.2s ease;
-    background-color: #f8f9fa;
-}
-
-.payment-content input:focus {
-    border-color: #f44336;
-    box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.1);
-    outline: none;
-    background-color: white;
-}
-
-.payment-content input::placeholder {
-    color: #95a5a6;
-}
-
-.payment-content button {
-    padding: 1rem;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin-top: 0.5rem;
-}
-
-.payment-content button:first-of-type {
-    background-color: #f44336;
-    color: white;
-}
-
-.payment-content button:first-of-type:hover {
-    background-color: #e53935;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(244, 67, 54, 0.2);
-}
-
-.payment-content button:last-of-type {
-    background-color: #e0e0e0;
-    color: #2c3e50;
-}
-
-.payment-content button:last-of-type:hover {
-    background-color: #bdbdbd;
-    transform: translateY(-2px);
-}
-
-.modal-links {
-    margin-top: 1.5rem;
-    text-align: center;
-    padding-top: 1rem;
-    border-top: 1px solid #e0e0e0;
-}
-
-.modal-links a {
-    color: #f44336;
-    text-decoration: none;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    position: relative;
-}
-
-.modal-links a:hover {
-    color: #d32f2f;
-}
-
-.modal-links a::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 1px;
-    bottom: -2px;
-    left: 0;
-    background-color: #f44336;
-    transform: scaleX(0);
-    transition: transform 0.2s ease;
-}
-
-.modal-links a:hover::after {
-    transform: scaleX(1);
-}
-
-/* Password input icon styling (optional) */
-.password-field {
-    position: relative;
-}
-
-.password-field input[type="password"] {
-    padding-right: 2.5rem;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .payment-content {
+      .cart-summary {
+        background-color: #ffffff;
+        border-radius: 16px;
         padding: 2rem;
-        width: 95%;
-    }
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        animation: slideIn 0.3s ease;
+        max-width: 500px;
+        width: 90%;
+      }
 
-    .payment-content h2 {
-        font-size: 1.75rem;
-    }
+      @keyframes slideIn {
+        from {
+          transform: translate(-50%, -60%);
+          opacity: 0;
+        }
+        to {
+          transform: translate(-50%, -50%);
+          opacity: 1;
+        }
+      }
 
-    .payment-content input,
-    .payment-content button {
-        padding: 0.875rem;
-    }
-}
+      .cart-summary h2 {
+        color: #2c3e50;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.8rem;
+        border-bottom: 2px solid #ecf0f1;
+        text-align: center;
+      }
 
-/* Error state styling */
-.payment-content input.error {
-    border-color: #ff4757;
-    background-color: #fff8f8;
-}
+      .cart-summary ul {
+        max-height: 300px;
+        overflow-y: auto;
+        padding: 0.5rem;
+        margin: 1rem 0;
+        border-radius: 8px;
+        background-color: #f8f9fa;
+      }
 
-.error-message {
-    color: #ff4757;
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
-    display: none;
-}
+      .cart-summary ul li {
+        padding: 0.8rem;
+        margin-bottom: 0.5rem;
+        background-color: white;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: transform 0.2s ease;
+      }
 
-.payment-content input.error + .error-message {
-    display: block;
-}
+      .cart-summary ul li:hover {
+        transform: translateX(5px);
+      }
 
-/* Success state styling */
-.payment-content input.success {
-    border-color: #2ecc71;
-    background-color: #f8fff9;
-}
-    
-    
+      .cart-summary ul li button {
+        background-color: #ff4757;
+        color: white;
+        border: none;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      .cart-summary ul li button:hover {
+        background-color: #ff6b81;
+      }
+
+      .cart-summary p {
+        font-size: 1.1rem;
+        color: #2d3436;
+        margin: 0.8rem 0;
+        padding: 0.5rem 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .cart-summary p span {
+        font-weight: bold;
+        color: #2ecc71;
+      }
+
+      .cart-summary button {
+        width: 100%;
+        padding: 1rem;
+        margin-top: 1rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .cart-summary button[onclick="redirectToSignIn()"] {
+        background-color: #2ecc71;
+        color: white;
+      }
+
+      .cart-summary button[onclick="redirectToSignIn()"]:hover {
+        background-color: #27ae60;
+        transform: translateY(-2px);
+      }
+
+      .cart-summary button[onclick="closeCartSummary()"] {
+        background-color: #e74c3c;
+        color: white;
+      }
+
+      .cart-summary button[onclick="closeCartSummary()"]:hover {
+        background-color: #c0392b;
+        transform: translateY(-2px);
+      }
+
+      /* Custom scrollbar for the items list */
+      .cart-summary ul::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .cart-summary ul::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+      }
+
+      .cart-summary ul::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+      }
+
+      .cart-summary ul::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .cart-summary {
+          width: 95%;
+          padding: 1.5rem;
+        }
+
+        .cart-summary h2 {
+          font-size: 1.5rem;
+        }
+
+        .cart-summary ul {
+          max-height: 250px;
+        }
+
+        .cart-summary button {
+          padding: 0.8rem;
+        }
+      }
+
+      /* login and sign up */
+
+      .payment-modal {
+        background-color: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(3px);
+        transition: all 0.3s ease;
+      }
+
+      .payment-content {
+        background: white;
+        border-radius: 16px;
+        padding: 2.5rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        animation: modalSlideIn 0.3s ease;
+        max-width: 400px;
+        width: 90%;
+      }
+
+      @keyframes modalSlideIn {
+        from {
+          transform: translateY(-20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .payment-content h2 {
+        color: #2c3e50;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        font-weight: 600;
+        position: relative;
+      }
+
+      .payment-content h2::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 3px;
+        background-color: #f44336;
+        border-radius: 2px;
+      }
+
+      #login-fields,
+      #signup-fields {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .payment-content input {
+        padding: 1rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+        background-color: #f8f9fa;
+      }
+
+      .payment-content input:focus {
+        border-color: #f44336;
+        box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.1);
+        outline: none;
+        background-color: white;
+      }
+
+      .payment-content input::placeholder {
+        color: #95a5a6;
+      }
+
+      .payment-content button {
+        padding: 1rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-top: 0.5rem;
+      }
+
+      .payment-content button:first-of-type {
+        background-color: #f44336;
+        color: white;
+      }
+
+      .payment-content button:first-of-type:hover {
+        background-color: #e53935;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(244, 67, 54, 0.2);
+      }
+
+      .payment-content button:last-of-type {
+        background-color: #e0e0e0;
+        color: #2c3e50;
+      }
+
+      .payment-content button:last-of-type:hover {
+        background-color: #bdbdbd;
+        transform: translateY(-2px);
+      }
+
+      .modal-links {
+        margin-top: 1.5rem;
+        text-align: center;
+        padding-top: 1rem;
+        border-top: 1px solid #e0e0e0;
+      }
+
+      .modal-links a {
+        color: #f44336;
+        text-decoration: none;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        position: relative;
+      }
+
+      .modal-links a:hover {
+        color: #d32f2f;
+      }
+
+      .modal-links a::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        bottom: -2px;
+        left: 0;
+        background-color: #f44336;
+        transform: scaleX(0);
+        transition: transform 0.2s ease;
+      }
+
+      .modal-links a:hover::after {
+        transform: scaleX(1);
+      }
+
+      /* Password input icon styling (optional) */
+      .password-field {
+        position: relative;
+      }
+
+      .password-field input[type="password"] {
+        padding-right: 2.5rem;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .payment-content {
+          padding: 2rem;
+          width: 95%;
+        }
+
+        .payment-content h2 {
+          font-size: 1.75rem;
+        }
+
+        .payment-content input,
+        .payment-content button {
+          padding: 0.875rem;
+        }
+      }
+
+      /* Error state styling */
+      .payment-content input.error {
+        border-color: #ff4757;
+        background-color: #fff8f8;
+      }
+
+      .error-message {
+        color: #ff4757;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        display: none;
+      }
+
+      .payment-content input.error + .error-message {
+        display: block;
+      }
+
+      /* Success state styling */
+      .payment-content input.success {
+        border-color: #2ecc71;
+        background-color: #f8fff9;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1 class="title">Online Shopping Platform</h1>
-    
-    
 
     <div class="search-filter">
-        <input type="text" id="search-bar" placeholder="Search products...">
-        <select id="category-filter">
-            <option value="">All Categories</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Clothing">Clothing</option>
-            <option value="Books">Books</option>
-        </select>
-    
+      <input type="text" id="search-bar" placeholder="Search products..." />
+      <select id="category-filter">
+        <option value="">All Categories</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Clothing">Clothing</option>
+        <option value="Books">Books</option>
+      </select>
     </div>
-    
+
     <div id="product-catalog" class="product-grid"></div>
-    
-
-
 
     <!-- Shopping Cart item -->
     <div id="cart" class="cart">
-        <h2 class="cart_title">Shopping Cart</h2>
-        <ul id="cart-items-main"></ul>
-        <p class="cart_total">Total Discount: $<span id="cart-discount-main">0.00</span></p>
-        <p class="cart_total">Total: $<span id="cart-total-main">0.00</span></p>
-        <!-- <button onclick="PaymentMethod()">Checkout</button> -->
+      <h2 class="cart_title">Shopping Cart</h2>
+      <ul id="cart-items-main"></ul>
+      <p class="cart_total">
+        Total Discount: $<span id="cart-discount-main">0.00</span>
+      </p>
+      <p class="cart_total">Total: $<span id="cart-total-main">0.00</span></p>
+      <!-- <button onclick="PaymentMethod()">Checkout</button> -->
 
-        <button class="chckoutbuttons" onclick="checkout()">Checkout</button>
+      <button class="chckoutbuttons" onclick="checkout()">Checkout</button>
     </div>
-    
+
     <div id="cart-summary-modal">
-        <div class="modal-backdrop" id="cart-summary-backdrop"></div>
-        <div id="cart-summary" class="cart-summary">
-            <h2>Order Summary</h2>
-            <ul id="cart-items-summary"></ul>
-            <p>Total Discount: $<span id="cart-discount-summary">0.00</span></p>
-            <p>Total: $<span id="cart-total-summary">0.00</span></p>
-            <button onclick="redirectToSignIn()">Sign-In To Checkout</button>
-            <button onclick="closeCartSummary()">Close</button>
-        </div>
+      <div class="modal-backdrop" id="cart-summary-backdrop"></div>
+      <div id="cart-summary" class="cart-summary">
+        <h2>Order Summary</h2>
+        <ul id="cart-items-summary"></ul>
+        <p>Total Discount: $<span id="cart-discount-summary">0.00</span></p>
+        <p>Total: $<span id="cart-total-summary">0.00</span></p>
+        <button onclick="redirectToSignIn()">Sign-In To Checkout</button>
+        <button onclick="closeCartSummary()">Close</button>
+      </div>
     </div>
-    
-    
 
-<!-- Eto yung Order Summary, need me i change yung button ng checkout -->
-   
-
-
+    <!-- Eto yung Order Summary, need me i change yung button ng checkout -->
 
     <div id="payment-modal" class="payment-modal">
-        <div class="payment-content">
-            <h2>Payment Details</h2>
-            <div>Select Payment Method</div>
-            <select id="payment-method" onchange="togglePaymentFields()">
-                <option value="">Select Payment Method</option>
-                <option value="cash">Cash</option>
-                <option value="card">Credit Card</option>
-            </select>
-            <div id="common-fields" style="display:none;">
-                <div>Enter Full Name:</div>
-                <input type="text" id="customer-name" placeholder="Full Name" required>
-                <div>Enter phone number</div>
-                <input type="tel" id="customer-phone" placeholder="Phone Number" required>
-                <div>Enter Address</div>
-                <input type="text" id="customer-address" placeholder="Delivery Address" required>
-            </div>
-            <div id="card-fields" style="display:none;">
-                <div>Enter Card Number</div>
-                <input type="text" id="card-number" placeholder="Card Number" required>
-                <div>Enter card expiry date</div>
-                <input type="text" id="card-expiry" placeholder="Expiry Date (MM/YY)" required>
-                <div>Enter CCV</div>
-                <input type="text" id="card-cvv" placeholder="CVV" required>
-            </div>
-            <div>
-            <button onclick="processPayment(); ClosePaymentModalFromLogin()" >Complete Payment</button>
-            <button onclick="closePaymentModal()">Cancel</button>
+      <div class="payment-content">
+        <h2>Payment Details</h2>
+        <div>Select Payment Method</div>
+        <select id="payment-method" onchange="togglePaymentFields()">
+          <option value="">Select Payment Method</option>
+          <option value="cash">Cash</option>
+          <option value="card">Credit Card</option>
+        </select>
+        <div id="common-fields" style="display: none">
+          <div>Enter Full Name:</div>
+          <input
+            type="text"
+            id="customer-name"
+            placeholder="Full Name"
+            required
+          />
+          <div>Enter phone number</div>
+          <input
+            type="tel"
+            id="customer-phone"
+            placeholder="Phone Number"
+            required
+          />
+          <div>Enter Address</div>
+          <input
+            type="text"
+            id="customer-address"
+            placeholder="Delivery Address"
+            required
+          />
         </div>
+        <div id="card-fields" style="display: none">
+          <div>Enter Card Number</div>
+          <input
+            type="text"
+            id="card-number"
+            placeholder="Card Number"
+            required
+          />
+          <div>Enter card expiry date</div>
+          <input
+            type="text"
+            id="card-expiry"
+            placeholder="Expiry Date (MM/YY)"
+            required
+          />
+          <div>Enter CCV</div>
+          <input type="text" id="card-cvv" placeholder="CVV" required />
         </div>
+        <div>
+          <button onclick="processPayment(); ClosePaymentModalFromLogin()">
+            Complete Payment
+          </button>
+          <button onclick="closePaymentModal()">Cancel</button>
+        </div>
+      </div>
     </div>
 
     <script>
-        // MAIN CLASS
-        class Product {
-            constructor(id, name, price, category, imageUrl) {
-                this.id = id;
-                this.name = name;
-                this.price = price;
-                this.category = category;
-                this.imageUrl = imageUrl;
-            }
-
-            applyDiscount() {
-                return this.price;
-            }
+      // MAIN CLASS
+      class Product {
+        constructor(id, name, price, category, imageUrl) {
+          this.id = id;
+          this.name = name;
+          this.price = price;
+          this.category = category;
+          this.imageUrl = imageUrl;
         }
 
-        class Electronics extends Product {
-            applyDiscount() {
+        applyDiscount() {
+          return this.price;
+        }
+      }
 
-                return this.price * 0.90; //10% Discount
-            }
+      class Electronics extends Product {
+        applyDiscount() {
+          return this.price * 0.9; //10% Discount
+        }
+      }
+
+      class Clothing extends Product {
+        applyDiscount() {
+          return this.price * 0.85; // 15% off
+        }
+      }
+      class Books extends Product {
+        applyDiscount() {
+          return this.price * 0.95; // 5% off
+        }
+      }
+
+      class Cart {
+        constructor() {
+          this.items = [];
         }
 
-        class Clothing extends Product {
-            applyDiscount() {
-                return this.price * 0.85; // 15% off
-            }
-        }
-        class Books extends Product {
-            applyDiscount() {
-                return this.price * 0.95; // 5% off
-            }
-        }
+        addItem(product) {
+          const existingItem = this.items.find(
+            (item) => item.id === product.id
+          );
 
-        
-
-
-        class Cart {
-    constructor() {
-        this.items = [];
-    }
-
-    addItem(product) {
-        const existingItem = this.items.find(item => item.id === product.id);
-        
-        if (existingItem) {
+          if (existingItem) {
             existingItem.quantity++;
-        } else {
+          } else {
             const cartItem = Object.create(Object.getPrototypeOf(product));
             Object.assign(cartItem, product);
             cartItem.quantity = 1;
             cartItem.uniqueId = Date.now();
             this.items.push(cartItem);
-        }
-        
-        this.updateCart();
-    }
+          }
 
-    removeItem(uniqueId) {
-        const index = this.items.findIndex(item => item.uniqueId === uniqueId);
-        
-        if (index !== -1) {
+          this.updateCart();
+        }
+
+        removeItem(uniqueId) {
+          const index = this.items.findIndex(
+            (item) => item.uniqueId === uniqueId
+          );
+
+          if (index !== -1) {
             if (this.items[index].quantity > 1) {
-                this.items[index].quantity--;
+              this.items[index].quantity--;
             } else {
-                this.items.splice(index, 1);
+              this.items.splice(index, 1);
             }
-            
+
             this.updateCart();
+          }
         }
-    }
 
-    calculateTotal() {
-        return this.items.reduce((total, item) => 
-            total + (item.applyDiscount() * item.quantity), 0
-        ).toFixed(2);
-    }
+        calculateTotal() {
+          return this.items
+            .reduce(
+              (total, item) => total + item.applyDiscount() * item.quantity,
+              0
+            )
+            .toFixed(2);
+        }
 
-    calculateDisount() {
-        return this.items.reduce((total, item) => 
-            total + ((item.price - item.applyDiscount()) * item.quantity), 0
-        ).toFixed(2);
-    }
+        calculateDisount() {
+          return this.items
+            .reduce(
+              (total, item) =>
+                total + (item.price - item.applyDiscount()) * item.quantity,
+              0
+            )
+            .toFixed(2);
+        }
 
-    updateCart() {
-        const cartItemsMain = document.getElementById('cart-items-main');
-        const cartItemsSummary = document.getElementById('cart-items-summary');
-        const cartTotalMain = document.getElementById('cart-total-main');
-        const cartTotalSummary = document.getElementById('cart-total-summary');
-        const cartDiscountMain = document.getElementById('cart-discount-main');
-        const cartDiscountSummary = document.getElementById('cart-discount-summary');
+        updateCart() {
+          const cartItemsMain = document.getElementById("cart-items-main");
+          const cartItemsSummary =
+            document.getElementById("cart-items-summary");
+          const cartTotalMain = document.getElementById("cart-total-main");
+          const cartTotalSummary =
+            document.getElementById("cart-total-summary");
+          const cartDiscountMain =
+            document.getElementById("cart-discount-main");
+          const cartDiscountSummary = document.getElementById(
+            "cart-discount-summary"
+          );
 
-        cartItemsMain.innerHTML = '';
-        cartItemsSummary.innerHTML = '';
+          cartItemsMain.innerHTML = "";
+          cartItemsSummary.innerHTML = "";
 
-        this.items.forEach(item => {
-            const li = document.createElement('li');
+          this.items.forEach((item) => {
+            const li = document.createElement("li");
             li.innerHTML = `
-                <span>${item.name} x${item.quantity} - $${(item.applyDiscount() * item.quantity).toFixed(2)}</span>
-                <button onclick="cart.removeItem(${item.uniqueId})">Remove</button>
+                <span>${item.name} x${item.quantity} - $${(
+              item.applyDiscount() * item.quantity
+            ).toFixed(2)}</span>
+                <button onclick="cart.removeItem(${
+                  item.uniqueId
+                })">Remove</button>
             `;
             cartItemsMain.appendChild(li);
             cartItemsSummary.appendChild(li.cloneNode(true));
-        });
+          });
 
-        const total = this.calculateTotal();
-        const discount = this.calculateDisount();
+          const total = this.calculateTotal();
+          const discount = this.calculateDisount();
 
-        cartTotalMain.textContent = total;
-        cartTotalSummary.textContent = total;
-        cartDiscountMain.textContent = discount;
-        cartDiscountSummary.textContent = discount;
-    }
-}
+          cartTotalMain.textContent = total;
+          cartTotalSummary.textContent = total;
+          cartDiscountMain.textContent = discount;
+          cartDiscountSummary.textContent = discount;
+        }
+      }
 
+      //         }
 
+      // Product Catalog items
+      const products = [
+        new Electronics(
+          1,
+          "Smartphone",
+          599.99,
+          "Electronics",
+          "./Smart Phone.png"
+        ),
+        new Electronics(2, "Laptop", 1299.99, "Electronics", "Laptop.png"),
+        new Clothing(3, "T-Shirt", 29.99, "Clothing", "T-shirt.png"),
+        new Clothing(4, "Jeans", 59.99, "Clothing", "Jeans.png"),
+        new Books(5, "Programming Book", 49.99, "Books", "Textbook.png"),
+        new Books(6, "Science Fiction Novel", 19.99, "Books", "Novel.png"),
+      ];
 
+      // Render Product Catalog with Search and Filter
+      function renderProducts(searchTerm = "", categoryFilter = "") {
+        const productCatalog = document.getElementById("product-catalog");
+        productCatalog.innerHTML = "";
 
+        const filteredProducts = products.filter(
+          (product) =>
+            (searchTerm === "" ||
+              product.name.toLowerCase().includes(searchTerm.toLowerCase())) &&
+            (categoryFilter === "" || product.category === categoryFilter)
+        );
 
-
-
-
-
-
-//         }
-
-        // Product Catalog items
-        const products = [
-            new Electronics(1, 'Smartphone', 599.99, 'Electronics', './Smart Phone.png'),
-            new Electronics(2, 'Laptop', 1299.99, 'Electronics', 'Laptop.png'),
-            new Clothing(3, 'T-Shirt', 29.99, 'Clothing', 'T-shirt.png'),
-            new Clothing(4, 'Jeans', 59.99, 'Clothing', 'Jeans.png'),
-            new Books(5, 'Programming Book', 49.99, 'Books', 'Textbook.png'),
-            new Books(6, 'Science Fiction Novel', 19.99, 'Books', 'Novel.png')
-        ];
-
-        // Render Product Catalog with Search and Filter
-        function renderProducts(searchTerm = '', categoryFilter = '') {
-            const productCatalog = document.getElementById('product-catalog');
-            productCatalog.innerHTML = '';
-
-            const filteredProducts = products.filter(product => 
-                (searchTerm === '' || product.name.toLowerCase().includes(searchTerm.toLowerCase())) &&
-                (categoryFilter === '' || product.category === categoryFilter)
-            );
-
-            filteredProducts.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.classList.add('product-card');
-                productCard.innerHTML = `
+        filteredProducts.forEach((product) => {
+          const productCard = document.createElement("div");
+          productCard.classList.add("product-card");
+          productCard.innerHTML = `
                     <img src="${product.imageUrl}" alt="${product.name}">
                     <h3>${product.name}</h3>
                     <p>Category: ${product.category}</p>
                     <p>Original Price: $${product.price.toFixed(2)}</p>
-                    <p>Discounted Price: $${product.applyDiscount().toFixed(2)}</p>
-                    <button onclick="cart.addItem(products[${product.id - 1}])">Add to Cart</button>
+                    <p>Discounted Price: $${product
+                      .applyDiscount()
+                      .toFixed(2)}</p>
+                    <button onclick="cart.addItem(products[${
+                      product.id - 1
+                    }])">Add to Cart</button>
                 `;
-                productCatalog.appendChild(productCard);
-            });
+          productCatalog.appendChild(productCard);
+        });
+      }
+
+      // Payment Modal Functions
+      function checkout() {
+        if (cart.items.length === 0) {
+          alert("Your cart is empty!");
+          return;
+        }
+        document.getElementById("cart-summary").style.display = "block";
+
+        // document.getElementById('payment-modal').style.display = 'block';
+        // Eto yung gagawin mo after ng login
+      }
+
+      function PaymentMethod() {
+        if (cart.items.length === 0) {
+          alert("Your cart is empty!");
+          return;
         }
 
-        // Payment Modal Functions
-        function checkout() {
-            if (cart.items.length === 0) {
-                alert('Your cart is empty!');
-                return;
-            }
-            document.getElementById('cart-summary').style.display = 'block';
+        document.getElementById("payment-modal").style.display = "block";
+        // Eto yung gagawin mo after ng login
+      }
+      //Palit yung payment-modal to order-summary
 
+      function OrderSummary() {
+        document.getElementById("order-summary").style.display = "block";
+      }
 
-            // document.getElementById('payment-modal').style.display = 'block';
-                // Eto yung gagawin mo after ng login
+      function togglePaymentFields() {
+        const paymentMethod = document.getElementById("payment-method").value;
+        const commonFields = document.getElementById("common-fields");
+        const cardFields = document.getElementById("card-fields");
 
+        commonFields.style.display = paymentMethod ? "block" : "none";
+        cardFields.style.display = paymentMethod === "card" ? "block" : "none";
+      }
+
+      function closePaymentModal() {
+        document.getElementById("payment-modal").style.display = "none";
+      }
+
+      function processPayment() {
+        const paymentMethod = document.getElementById("payment-method").value;
+        const name = document.getElementById("customer-name").value;
+        const phone = document.getElementById("customer-phone").value;
+        const address = document.getElementById("customer-address").value;
+
+        // Validation
+        if (!name || !phone || !address) {
+          alert("Please fill in all required fields");
+          return;
         }
 
-        function PaymentMethod() {
-            if (cart.items.length === 0) {
-                alert('Your cart is empty!');
-                return;
-            }
-          
+        if (paymentMethod === "card") {
+          const cardNumber = document.getElementById("card-number").value;
+          const cardExpiry = document.getElementById("card-expiry").value;
+          const cardCVV = document.getElementById("card-cvv").value;
 
-            document.getElementById('payment-modal').style.display = 'block';
-                // Eto yung gagawin mo after ng login
-
-        }
-//Palit yung payment-modal to order-summary
-
-        function OrderSummary() {
-            
-            document.getElementById('order-summary').style.display = 'block';
+          if (!cardNumber || !cardExpiry || !cardCVV) {
+            alert("Please fill in all card details");
+            return;
+          }
         }
 
+        // Payment processing logic
+        const total = cart.calculateTotal();
+        alert(
+          `Order Completed!\nTotal: $${total}\nPayment Method: ${paymentMethod.toUpperCase()}`
+        );
+        window.location.href = "http://127.0.0.1:5500/index.html";
+        // Reset cart and modal
+        ///testing push
+        cart.items = [];
+        cart.updateCart();
+        closePaymentModal();
+      }
 
+      // Initial render and event listeners
+      renderProducts();
 
-
-
-        function togglePaymentFields() {
-            const paymentMethod = document.getElementById('payment-method').value;
-            const commonFields = document.getElementById('common-fields');
-            const cardFields = document.getElementById('card-fields');
-
-            commonFields.style.display = paymentMethod ? 'block' : 'none';
-            cardFields.style.display = paymentMethod === 'card' ? 'block' : 'none';
-        }
-
-        function closePaymentModal() {
-            document.getElementById('payment-modal').style.display = 'none';
-        }
-
-        function processPayment() {
-            const paymentMethod = document.getElementById('payment-method').value;
-            const name = document.getElementById('customer-name').value;
-            const phone = document.getElementById('customer-phone').value;
-            const address = document.getElementById('customer-address').value;
-
-            // Validation
-            if (!name || !phone || !address) {
-                alert('Please fill in all required fields');
-                return;
-            }
-
-            if (paymentMethod === 'card') {
-                const cardNumber = document.getElementById('card-number').value;
-                const cardExpiry = document.getElementById('card-expiry').value;
-                const cardCVV = document.getElementById('card-cvv').value;
-
-                if (!cardNumber || !cardExpiry || !cardCVV) {
-                    alert('Please fill in all card details');
-                    return;
-                }
-            }
-
-            // Payment processing logic
-            const total = cart.calculateTotal();
-            alert(`Order Completed!\nTotal: $${total}\nPayment Method: ${paymentMethod.toUpperCase()}`);
-            window.location.href = "http://127.0.0.1:5500/index.html";
-            // Reset cart and modal
-            ///testing push
-            cart.items = [];
-            cart.updateCart();
-            closePaymentModal();
-            
-            
-        }
-
-        // Initial render and event listeners
-        renderProducts();
-
-        document.getElementById('search-bar').addEventListener('input', function() {
-            const searchTerm = this.value;
-            const categoryFilter = document.getElementById('category-filter').value;
-            renderProducts(searchTerm, categoryFilter);
+      document
+        .getElementById("search-bar")
+        .addEventListener("input", function () {
+          const searchTerm = this.value;
+          const categoryFilter =
+            document.getElementById("category-filter").value;
+          renderProducts(searchTerm, categoryFilter);
         });
 
-        document.getElementById('category-filter').addEventListener('change', function() {
-            const searchTerm = document.getElementById('search-bar').value;
-            const categoryFilter = this.value;
-            renderProducts(searchTerm, categoryFilter);
+      document
+        .getElementById("category-filter")
+        .addEventListener("change", function () {
+          const searchTerm = document.getElementById("search-bar").value;
+          const categoryFilter = this.value;
+          renderProducts(searchTerm, categoryFilter);
         });
 
-        // Initialize Cart
-        const cart = new Cart();
+      // Initialize Cart
+      const cart = new Cart();
 
+      function openCartSummary() {
+        document.getElementById("cart-summary").style.display = "block";
+        document.getElementById("cart-summary-backdrop").style.display =
+          "block";
+      }
 
+      function closeCartSummary() {
+        document.getElementById("cart-summary").style.display = "none";
+        document.getElementById("cart-summary-backdrop").style.display = "none";
+      }
 
-    
-        function openCartSummary() {
-    document.getElementById('cart-summary').style.display = 'block';
-    document.getElementById('cart-summary-backdrop').style.display = 'block';
-}
+      // Redirect to login.html
+      function redirectToSignIn() {
+        window.location.href = "login.html"; // Replace 'login.html' with the path to your login page.
+      }
 
-function closeCartSummary() {
-    document.getElementById('cart-summary').style.display = 'none';
-    document.getElementById('cart-summary-backdrop').style.display = 'none';
-}
+      // On load show the payment method
 
+      function openCheckoutModal() {
+        const modal = document.getElementById("payment-modal");
+        modal.style.display = "block"; // Ensure your modal uses display to show/hide
+      }
 
-// Redirect to login.html
-function redirectToSignIn() {
-    window.location.href = 'login.html'; // Replace 'login.html' with the path to your login page.
-}
-
-
-// On load show the payment method
-
-function openCheckoutModal() {
-        const modal = document.getElementById('payment-modal');
-        modal.style.display = 'block'; // Ensure your modal uses display to show/hide
-    }
-
-    function checkForCheckoutParameter() {
+      function checkForCheckoutParameter() {
         const params = new URLSearchParams(window.location.search);
-        if (params.get('checkout') === 'true') {
-            openCheckoutModal();
+        if (params.get("checkout") === "true") {
+          openCheckoutModal();
         }
-    }
+      }
 
-    // Run this function when the page loads
-    window.onload = checkForCheckoutParameter;
+      // Run this function when the page loads
+      window.onload = checkForCheckoutParameter;
 
+      function ClosePaymentModalFromLogin() {
+        const modal = document.getElementById("payment-modal");
+        modal.style.display = "none"; // Ensure your modal uses display to show/hide
+      }
 
-    function ClosePaymentModalFromLogin() {
-        const modal = document.getElementById('payment-modal');
-        modal.style.display = 'none'; // Ensure your modal uses display to show/hide
-    }
+      function redirectToSignIn() {
+        document.getElementById("login-modal").style.display = "flex";
+        closeCartSummary();
+      }
 
+      function closeLoginModal() {
+        document.getElementById("login-modal").style.display = "none";
+      }
 
-    function redirectToSignIn() {
-    document.getElementById('login-modal').style.display = 'flex';
-    closeCartSummary();
-}
+      function handleLogin() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
 
-function closeLoginModal() {
-    document.getElementById('login-modal').style.display = 'none';
-}
+        if (!username || !password) {
+          alert("Please enter both username and password");
+          return;
+        }
 
-function handleLogin() {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    
-    if (!username || !password) {
-        alert('Please enter both username and password');
-        return;
-    }
-    
-    const user = users.find(u => u.username === username && u.password === password);
-    
-    if (user || (username === 'demo' && password === 'password')) {
-        closeLoginModal();
-        PaymentMethod();
-    } else {
-        alert('Invalid credentials');
-    }
-}
+        const user = users.find(
+          (u) => u.username === username && u.password === password
+        );
 
+        if (user || (username === "demo" && password === "password")) {
+          closeLoginModal();
+          PaymentMethod();
+        } else {
+          alert("Invalid credentials");
+        }
+      }
 
+      // Add to existing java script:
 
+      let users = [];
 
-// Add to existing java script: 
+      function showSignupModal() {
+        document.getElementById("login-modal").style.display = "none";
+        document.getElementById("signup-modal").style.display = "flex";
+      }
 
-let users = [];
+      function showLoginModal() {
+        document.getElementById("signup-modal").style.display = "none";
+        document.getElementById("login-modal").style.display = "flex";
+      }
 
-function showSignupModal() {
-    document.getElementById('login-modal').style.display = 'none';
-    document.getElementById('signup-modal').style.display = 'flex';
-}
+      function closeSignupModal() {
+        document.getElementById("signup-modal").style.display = "none";
+      }
 
-function showLoginModal() {
-    document.getElementById('signup-modal').style.display = 'none';
-    document.getElementById('login-modal').style.display = 'flex';
-}
+      function handleSignup() {
+        const username = document.getElementById("new-username").value;
+        const password = document.getElementById("new-password").value;
+        const confirmPassword =
+          document.getElementById("confirm-password").value;
 
-function closeSignupModal() {
-    document.getElementById('signup-modal').style.display = 'none';
-}
+        if (!username || !password || !confirmPassword) {
+          alert("Please fill in all fields");
+          return;
+        }
 
-function handleSignup() {
-    const username = document.getElementById('new-username').value;
-    const password = document.getElementById('new-password').value;
-    const confirmPassword = document.getElementById('confirm-password').value;
+        if (password !== confirmPassword) {
+          alert("Passwords do not match");
+          return;
+        }
 
-    if (!username || !password || !confirmPassword) {
-        alert('Please fill in all fields');
-        return;
-    }
+        if (users.some((user) => user.username === username)) {
+          alert("Username already exists");
+          return;
+        }
 
-    if (password !== confirmPassword) {
-        alert('Passwords do not match');
-        return;
-    }
-
-    if (users.some(user => user.username === username)) {
-        alert('Username already exists');
-        return;
-    }
-
-    users.push({ username, password });
-    alert('Account created successfully!');
-    closeSignupModal();
-    showLoginModal();
-}
+        users.push({ username, password });
+        alert("Account created successfully!");
+        closeSignupModal();
+        showLoginModal();
+      }
     </script>
-</body>
+  </body>
 
-
-
-
-<div id="login-modal" class="payment-modal">
+  <div id="login-modal" class="payment-modal">
     <div class="payment-content">
-        <h2>Login</h2>
-        <div id="login-fields">
-            <h3>Username</h3>
-            <input type="text" id="username" placeholder="Username" required>
-            <h3>Password</h3>
-            <input type="password" id="password" placeholder="Password" required>
-            <button onclick="handleLogin()">Login</button>
-            <button onclick="closeLoginModal()">Cancel</button>
-            <div class="modal-links">
-                <a onclick="showSignupModal()">Don't have an account? Sign up</a>
-            </div>
+      <h2>Login</h2>
+      <div id="login-fields">
+        <h3>Username</h3>
+        <input type="text" id="username" placeholder="Username" required />
+        <h3>Password</h3>
+        <input type="password" id="password" placeholder="Password" required />
+        <button onclick="handleLogin()">Login</button>
+        <button onclick="closeLoginModal()">Cancel</button>
+        <div class="modal-links">
+          <a onclick="showSignupModal()">Don't have an account? Sign up</a>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 
-
-<div id="signup-modal" class="payment-modal">
+  <div id="signup-modal" class="payment-modal">
     <div class="payment-content">
-        <h2>Sign Up</h2>
-        <div id="signup-fields">
-            <input type="text" id="new-username" placeholder="Username" required>
-            <input type="password" id="new-password" placeholder="Password" required>
-            <input type="password" id="confirm-password" placeholder="Confirm Password" required>
-            <button onclick="handleSignup()">Sign Up</button>
-            <button onclick="closeSignupModal()">Cancel</button>
-            <div class="modal-links">
-                <a onclick="showLoginModal()">Already have an account? Login</a>
-            </div>
+      <h2>Sign Up</h2>
+      <div id="signup-fields">
+        <input type="text" id="new-username" placeholder="Username" required />
+        <input
+          type="password"
+          id="new-password"
+          placeholder="Password"
+          required
+        />
+        <input
+          type="password"
+          id="confirm-password"
+          placeholder="Confirm Password"
+          required
+        />
+        <button onclick="handleSignup()">Sign Up</button>
+        <button onclick="closeSignupModal()">Cancel</button>
+        <div class="modal-links">
+          <a onclick="showLoginModal()">Already have an account? Login</a>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 </html>
