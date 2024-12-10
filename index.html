@@ -208,16 +208,18 @@
 /* Login */
 
 #login-modal {
+    
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    display: none;
+    display: none; /* Change to 'flex' to enable flexbox centering */
     justify-content: center;
     align-items: center;
     z-index: 1000;
+
 }
 
 #login-modal .payment-content {
@@ -748,8 +750,10 @@ font-size: large;
                 <div>Enter CCV</div>
                 <input type="text" id="card-cvv" placeholder="CVV" required>
             </div>
+            <div>
             <button onclick="processPayment(); ClosePaymentModalFromLogin()" >Complete Payment</button>
             <button onclick="closePaymentModal()">Cancel</button>
+        </div>
         </div>
     </div>
 
@@ -1062,7 +1066,7 @@ function openCheckoutModal() {
 
 
     function redirectToSignIn() {
-    document.getElementById('login-modal').style.display = 'block';
+    document.getElementById('login-modal').style.display = 'flex';
     closeCartSummary();
 }
 
@@ -1098,12 +1102,12 @@ let users = [];
 
 function showSignupModal() {
     document.getElementById('login-modal').style.display = 'none';
-    document.getElementById('signup-modal').style.display = 'block';
+    document.getElementById('signup-modal').style.display = 'flex';
 }
 
 function showLoginModal() {
     document.getElementById('signup-modal').style.display = 'none';
-    document.getElementById('login-modal').style.display = 'block';
+    document.getElementById('login-modal').style.display = 'flex';
 }
 
 function closeSignupModal() {
