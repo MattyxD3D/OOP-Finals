@@ -646,6 +646,25 @@
         border-color: #2ecc71;
         background-color: #f8fff9;
       }
+      .paymentsel {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 32px; /* Increase gap for better spacing */
+        padding: 20px 0; /* Add more padding for larger click/tap area */
+      }
+
+      .paymentsel div {
+        font-size: 1.5rem; /* Increase font size for better visibility */
+        font-weight: bold; /* Optional: Make the text bolder */
+      }
+
+      .paymentsel select {
+        font-size: 1.2rem; /* Increase font size for the dropdown */
+        padding: 10px; /* Add padding for a larger dropdown area */
+        border: 2px solid #ccc; /* Optional: Add a border for better visibility */
+        border-radius: 5px; /* Optional: Add rounded corners */
+      }
     </style>
   </head>
   <body>
@@ -693,12 +712,15 @@
     <div id="payment-modal" class="payment-modal">
       <div class="payment-content">
         <h2>Payment Details</h2>
-        <div>Select Payment Method</div>
-        <select id="payment-method" onchange="togglePaymentFields()">
-          <option value="">Select Payment Method</option>
-          <option value="cash">Cash</option>
-          <option value="card">Credit Card</option>
-        </select>
+
+        <div class="paymentsel">
+          <div>Select Payment Method</div>
+          <select id="payment-method" onchange="togglePaymentFields()">
+            <option value="">Select Payment Method</option>
+            <option value="cash">Cash</option>
+            <option value="card">Credit Card</option>
+          </select>
+        </div>
         <div id="common-fields" style="display: none">
           <div>Enter Full Name:</div>
           <input
